@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#0b0d12"/>
+<title>Maailmavalo™ Mideo Maker</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0d12;--panel:#121620;--line:#252d3b;--muted:#8993a5;--text:#f4f6fb;--accent:#b8bec8;--mint:#c8cdd5;--danger:#ff8b8b;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(1000px 550px at 75% -10%,#252145 0%,transparent 62%),var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer}.app{max-width:1440px;margin:0 auto;padding:26px clamp(16px,3vw,38px) 36px}header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#d7d9dc,#6d727a);display:grid;place-items:center;color:#10131c;font-size:22px;font-weight:900;box-shadow:0 8px 26px #00000020}h1{font-size:19px;letter-spacing:.02em;margin:0 0 3px}.sub{font-size:12px;color:var(--muted)}.header-actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid var(--line);background:#1a202c;color:var(--text);padding:10px 14px;border-radius:11px;font-size:13px;display:inline-flex;align-items:center;gap:8px;transition:.18s}.btn:hover{border-color:#6e737b;background:#22283a;transform:translateY(-1px)}.btn.primary{background:#d7d9dc;border:0;color:#111318;font-weight:750;box-shadow:0 8px 24px #8c7cff25}.btn.primary:hover{filter:brightness(1.08)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,.8fr);gap:20px;align-items:start}.panel{background:linear-gradient(180deg,#151a25f2,#111620f5);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 55px #00000025;overflow:hidden}.preview-panel{padding:16px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}.panel-head h2{font-size:14px;margin:0;font-weight:700}.hint{font-size:11px;color:var(--muted)}.stage-wrap{position:relative;border-radius:10px;overflow:hidden;background:#05070b;box-shadow:none;aspect-ratio:16/9}.stage-wrap:fullscreen{width:100vw;height:100vh;aspect-ratio:auto;border-radius:0;display:grid;place-items:center;background:#000}.stage-wrap:fullscreen canvas{width:100%;height:100%;object-fit:contain}.stage-wrap:fullscreen .stage-label{top:18px;left:18px}canvas{display:block;width:100%;height:100%;object-fit:contain}.stage-label{position:absolute;left:12px;top:12px;padding:6px 9px;border-radius:7px;background:#090b10a8;border:1px solid #ffffff1a;color:#c8cadd;font-size:10px;letter-spacing:.08em;pointer-events:none;backdrop-filter:blur(8px)}.preview-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:13px;flex-wrap:wrap}.transport{display:flex;align-items:center;gap:10px}.round-btn{width:35px;height:35px;border:1px solid var(--line);background:#1b2230;color:#fff;border-radius:50%;font-size:14px}.time{font-variant-numeric:tabular-nums;color:#b4bdce;font-size:11px;min-width:88px}.progress{width:min(280px,30vw);accent-color:var(--accent);height:4px;cursor:pointer}.status{font-size:11px;color:var(--muted);min-height:16px}.status.error{color:var(--danger)}.status.ok{color:var(--mint)}.controls{display:flex;flex-direction:column;gap:13px}.section{padding:16px 17px}.section-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 14px;font-size:13px;font-weight:750}.section-title span{font-size:10px;color:var(--muted);font-weight:500}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:13px}.field:last-child{margin-bottom:0}.label-line{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;color:#c8cede}.value{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}input[type=text]{width:100%;background:#0c1018;border:1px solid #293244;border-radius:9px;padding:10px 11px;color:#f5f6fb;outline:none;font-size:12px}input[type=text]:focus{border-color:#8b9098;box-shadow:0 0 0 3px #8b909818}input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}input[type=color]{width:36px;height:27px;padding:2px;background:#0d1119;border:1px solid #30394a;border-radius:7px;cursor:pointer}.upload-row{display:flex;gap:8px;align-items:center}.file-btn{position:relative;overflow:hidden;flex:1;text-align:center;border:1px dashed #3c465b;border-radius:10px;background:#0e131d;padding:12px 9px;color:#d7dced;font-size:11px;cursor:pointer;min-width:0}.file-btn:hover{border-color:#7a8088;background:#171a1f}.file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}.file-name{font-size:10px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:7px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.inline-actions{display:flex;gap:8px;flex-wrap:wrap}.small-btn{background:#1b2230;border:1px solid #30394a;color:#dce1ed;padding:7px 9px;border-radius:8px;font-size:10px}.export-note{font-size:10px;line-height:1.55;color:var(--muted);margin:10px 0 0}.export-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}select{background:#0c1018;border:1px solid #30394a;border-radius:9px;padding:10px;color:#eff2fa;font-size:12px;width:100%}.export-progress{height:4px;background:#252c3a;border-radius:10px;overflow:hidden;margin-top:10px;display:none}.export-progress>div{height:100%;width:0;background:#b8bcc3;transition:width .2s}footer{text-align:center;color:#657084;font-size:10px;margin-top:22px}
+#ffmpegLogModal{position:fixed;inset:0;display:none;place-items:center;background:#000000b8;z-index:10000;padding:20px}#ffmpegLogModal.show{display:grid}.log-card{width:min(900px,100%);max-height:min(82vh,850px);display:flex;flex-direction:column;gap:12px;background:#141820;border:1px solid #3a4352;border-radius:16px;box-shadow:0 24px 80px #0008;padding:18px;color:#eef1f6}.log-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.log-head h3{margin:0;font-size:16px}.log-output{margin:0;min-height:220px;max-height:62vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#090c12;border:1px solid #293244;border-radius:10px;padding:13px;color:#cbd5e1;font:11px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}.log-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.log-actions button{border:1px solid #3a4352;background:#1b2230;color:#eef1f6;border-radius:9px;padding:9px 12px;font-size:11px}:root[data-theme="light"] .log-card{background:#fff;color:#252a32;border-color:#d9dce1}:root[data-theme="light"] .log-output{background:#f7f8fa;color:#252a32;border-color:#dfe3e8}:root[data-theme="light"] .log-actions button{background:#f7f8fa;color:#252a32;border-color:#dfe3e8}
+#ffmpegTimeoutModal{position:fixed;inset:0;display:none;place-items:center;background:#00000099;z-index:9999;padding:20px}#ffmpegTimeoutModal.show{display:grid}.modal-card{width:min(430px,100%);background:#141820;border:1px solid #3a4352;border-radius:16px;box-shadow:0 24px 80px #0008;padding:20px;color:#eef1f6}.modal-card h3{margin:0 0 10px;font-size:16px}.modal-card p{margin:0 0 16px;color:#aeb6c5;font-size:12px;line-height:1.65}.modal-actions{display:grid;grid-template-columns:1fr;gap:8px}.modal-actions button{border:1px solid #3a4352;background:#1b2230;color:#eef1f6;border-radius:9px;padding:10px;font-size:11px}.modal-actions button.primary{background:#f0f1f3;color:#111;border-color:#f0f1f3}.modal-actions button.danger{color:#f08b9b}.modal-small{font-size:10px;color:#778294;margin-top:12px}@media(max-width:900px){.layout{grid-template-columns:1fr}.controls{display:grid;grid-template-columns:1fr 1fr;align-items:start}.controls .export-card{grid-column:1/-1}}@media(max-width:580px){.app{padding:17px 12px 25px}header{align-items:flex-start;flex-direction:column}.header-actions{justify-content:flex-start}.preview-panel{padding:10px}.controls{display:flex}.progress{width:32vw}.hint{display:none}}
+
+.logo-img{width:54px;height:54px;object-fit:contain;filter:drop-shadow(0 5px 12px #0003)}
+:root{--bg:#0c0e12;--panel:#15181e;--line:#292e37;--muted:#929aa7;--text:#f3f4f6;--accent:#b8bcc3}
+body{background:var(--bg)}
+.panel{background:var(--panel);border:1px solid var(--line);box-shadow:none;border-radius:14px}
+.btn{border-radius:9px;box-shadow:none}
+.btn.primary{background:#b5adff;color:#171521;box-shadow:none}
+.stage-wrap{border-radius:10px;box-shadow:none}
+:root[data-theme="light"]{color-scheme:light;--bg:#f1f2f3;--panel:#ffffff;--line:#d9dce1;--muted:#6f747c;--text:#202328;--accent:#70757d}
+:root[data-theme="light"] body{background:#f3f4f6;color:var(--text)}
+:root[data-theme="light"] .panel{background:#fff;border-color:#e3e6eb}
+:root[data-theme="light"] .btn,:root[data-theme="light"] .round-btn{background:#f7f8fa;color:#252a32;border-color:#e0e4e9}
+:root[data-theme="light"] input[type=text],:root[data-theme="light"] .file-btn{background:#fafbfc;color:#242932;border-color:#dfe3e8}
+:root[data-theme="light"] .label-line{color:#454c57}
+:root[data-theme="light"] .stage-wrap{background:#08090c}
+:root[data-theme="light"] .sub{color:#737b88}
+</style><style>
+#stage:fullscreen{width:100vw;height:100vh;object-fit:contain;background:#000}
+.stage-wrap:fullscreen{background:#000;display:flex;align-items:center;justify-content:center}
+.stage-wrap:fullscreen canvas{width:100vw;height:100vh;object-fit:contain}
+</style></head><body>
+<div class="app"><header><div class="brand"><img class="logo-img" src="maailmavalo-logo.png" alt="Maailmavalo logo"/><div><h1>Maailmavalo™ Mideo Maker</h1><div class="sub">MUSIC VIDEO MAKER · 在浏览器里制作你的音乐画面</div></div></div><div class="header-actions"><button class="btn" id="themeBtn" type="button">☼ 浅色模式</button><button class="btn" id="importSettingsBtn">↥ 导入设置</button><button class="btn" id="exportSettingsBtn">↧ 导出设置</button><input id="settingsFile" type="file" accept="application/json,.json" hidden/></div></header>
+<main class="layout"><section class="panel preview-panel"><div class="panel-head"><h2>画面预览</h2><div class="header-actions"><span class="hint">16:9 · 1280 × 720</span><button class="small-btn" id="fullscreenBtn" type="button">⛶ 全屏预览</button></div></div><div class="stage-wrap"><canvas id="stage" width="1280" height="720"></canvas><div class="stage-label">LIVE PREVIEW</div></div><div class="preview-foot"><div class="transport"><button class="round-btn" id="playBtn" title="播放 / 暂停">▶</button><span class="time" id="timeText">00:00 / 00:00</span><input class="progress" id="seek" type="range" min="0" max="1000" value="0" aria-label="播放进度"/></div><div class="status" id="status">添加音乐与背景，开始制作。</div></div></section>
+<aside class="controls"><section class="panel section"><h2 class="section-title">素材 <span>MEDIA</span></h2>
+<div class="field"><div class="label-line"><label>背景图片 / 视频</label><span class="value">支持 JPG · PNG · MP4 · WebM</span></div><div class="upload-row"><label class="file-btn">＋ 选择背景<input id="backgroundFile" type="file" accept="image/*,video/mp4,video/webm,video/ogg"/></label><button class="small-btn" id="clearBackground">清除</button></div><div class="file-name" id="backgroundName">尚未选择背景，将使用渐变底色</div></div>
+<div class="field"><div class="label-line"><label>音乐文件</label><span class="value">MP3 · WAV · M4A · OGG</span></div><div class="upload-row"><label class="file-btn">♫ 选择音乐<input id="audioFile" type="file" accept="audio/*"/></label><button class="small-btn" id="clearAudio">清除</button></div><div class="file-name" id="audioName">尚未选择音乐</div></div>
+<div class="field"><div class="label-line"><label for="waveSpeed">波纹变化速度</label><span class="value" id="waveSpeedVal">3 / 10 · 慢</span></div><input id="waveSpeed" type="range" min="1" max="10" value="3"/><div class="value">数值越低，波纹起伏越平缓；数值越高，响应越灵敏。</div></div>
+<div class="grid2"><div class="field"><div class="label-line"><label for="waveColor">波纹颜色</label></div><input id="waveColor" type="color" value="#b1a0ff"/></div><div class="field"><div class="label-line"><label for="progressColor">进度条颜色</label></div><input id="progressColor" type="color" value="#a99bff"/></div></div><div class="grid2"><div class="field"><div class="label-line"><label for="brightness">背景亮度</label><span class="value" id="brightnessVal">75%</span></div><input id="brightness" type="range" min="20" max="150" value="75"/></div><div class="field"><div class="label-line"><label for="blur">背景模糊</label><span class="value" id="blurVal">0 px</span></div><input id="blur" type="range" min="0" max="24" value="0"/></div></div></section>
+<section class="panel section"><h2 class="section-title">文字排版 <span>TYPOGRAPHY</span></h2>
+<div class="field"><div class="label-line"><label for="songTitle">歌曲名称</label><span class="value">主标题</span></div><input id="songTitle" type="text" maxlength="80" placeholder="输入歌曲名称" value="Your Song"/></div>
+<div class="grid2"><div class="field"><div class="label-line"><label for="titleSize">名称字号</label><span class="value" id="titleSizeVal">54 px</span></div><input id="titleSize" type="range" min="24" max="110" value="54"/></div><div class="field"><div class="label-line"><label for="titleColor">名称颜色</label><input id="titleColor" type="color" value="#ffffff"/></div></div></div>
+<div class="field"><div class="label-line"><label for="artistName">作者 / 歌手</label><span class="value">副标题</span></div><input id="artistName" type="text" maxlength="80" placeholder="输入作者或歌手" value="Artist Name"/></div>
+<div class="grid2"><div class="field"><div class="label-line"><label for="artistSize">作者字号</label><span class="value" id="artistSizeVal">27 px</span></div><input id="artistSize" type="range" min="14" max="64" value="27"/></div><div class="field"><div class="label-line"><label for="artistColor">作者颜色</label><input id="artistColor" type="color" value="#d6d9e5"/></div></div></div></section>
+<section class="panel section"><h2 class="section-title">水印 <span>WATERMARK</span></h2><div class="field"><div class="label-line"><label for="watermarkText">水印文字</label><span class="value">左下角 · 灰色半透明</span></div><input id="watermarkText" type="text" maxlength="100" placeholder="例如：Maailmavalo™ Mideo Maker"/></div><div class="field"><div class="label-line"><label for="watermarkSize">水印字号</label><span class="value" id="watermarkSizeVal">16 px</span></div><input id="watermarkSize" type="range" min="10" max="32" value="16"/></div></section>
+<section class="panel section export-card"><h2 class="section-title">导出视频 <span>EXPORT</span></h2><div class="export-row"><div class="field" style="margin:0"><div class="label-line"><label for="format">格式</label></div><select id="format"><option value="mp4">MP4 · H.264</option><option value="mkv">MKV · Matroska</option><option value="webm">WebM · 浏览器原生</option></select></div><div class="field" style="margin:0"><div class="label-line"><label for="fps">帧率</label></div><select id="fps"><option value="30">30 FPS</option><option value="24">24 FPS</option><option value="60">60 FPS</option></select></div></div><button class="btn primary" id="exportVideoBtn" style="width:100%;justify-content:center;margin-top:12px">⬇ 开始导出视频</button><button class="btn" id="cancelExportBtn" type="button" style="width:100%;justify-content:center;margin-top:8px;display:none">✕ 取消导出</button><button class="btn" id="viewFfmpegLogBtn" type="button" style="width:100%;justify-content:center;margin-top:8px">☷ 查看FFmpeg详细信息</button><div class="export-progress" id="exportProgress"><div id="exportProgressBar"></div></div><p class="export-note">浏览器负责实时录制。WebM 优先直接导出，不依赖 FFmpeg；浏览器支持原生 MP4 时也直接导出，以保持 Android/Chrome 上的稳定路径；MKV 或不支持原生 MP4 的浏览器才需要 FFmpeg。FFmpeg 文件使用项目本地资源，无需从 CDN 下载；如果加载超时，会询问你重试、继续等待或取消。</p></section>
+</aside></main><div id="ffmpegLogModal" role="dialog" aria-modal="true" aria-labelledby="ffmpegLogTitle"><div class="log-card"><div class="log-head"><h3 id="ffmpegLogTitle">FFmpeg 详细信息 / 终端日志</h3><span class="hint" id="ffmpegLogCount">0 条日志</span></div><pre class="log-output" id="ffmpegLogOutput">尚未产生 FFmpeg 日志。选择 MKV 导出后，这里会显示 FFmpeg 的输出内容。</pre><div class="log-actions"><button id="copyFfmpegLogBtn" type="button">复制日志</button><button id="clearFfmpegLogBtn" type="button">清空日志</button><button id="closeFfmpegLogBtn" type="button">关闭</button></div></div></div><div id="ffmpegTimeoutModal" role="dialog" aria-modal="true" aria-labelledby="ffmpegTimeoutTitle"><div class="modal-card"><h3 id="ffmpegTimeoutTitle">FFmpeg 加载超时</h3><p id="ffmpegTimeoutText">FFmpeg 转码组件在限定时间内没有完成加载。可能是本地服务器或浏览器 Worker/WASM 初始化异常。建议改为 mp4 或 webm 导出</p><div class="modal-actions"><button class="primary" id="ffmpegRetryBtn">↻ 重试加载</button><button id="ffmpegWaitBtn">⏳ 继续等待 5 分钟</button><button class="danger" id="ffmpegCancelBtn">✕ 取消导出</button></div><div class="modal-small">继续等待不会重新开始录制；如果组件最终加载成功，会自动继续当前导出。</div></div></div><footer>你的素材在本地浏览器中处理 · Maailmavalo™ Mideo Maker</footer></div>
+<audio id="audio" preload="metadata"></audio><video id="backgroundVideo" muted loop playsinline preload="metadata" style="display:none"></video><img id="backgroundImage" alt="" style="display:none"/>
+<script type="module">
+const $=id=>document.getElementById(id),canvas=$('stage'),ctx=canvas.getContext('2d',{alpha:false}),audio=$('audio'),bgVideo=$('backgroundVideo'),bgImage=$('backgroundImage');
+const state={brightness:75,blur:0,songTitle:'Your Song',artistName:'Artist Name',titleSize:54,titleColor:'#ffffff',artistSize:27,artistColor:'#d6d9e5',waveSpeed:3,waveColor:'#b8bec8',progressColor:'#d5d8de',watermarkText:'',watermarkSize:16,theme:'dark'};
+let smoothedWave=null;
+let bgUrl=null,audioUrl=null,bgKind='none',rafId=0,audioContext=null,analyser=null,audioSource=null,recordDestination=null,timeData=null,ffmpegInstance=null;
+let exportCancelled=false,activeRecorder=null,activeVideoStream=null,ffmpegLog=[],ffmpegLoadPromise=null,ffmpegLoadGeneration=0;
+const W=canvas.width,H=canvas.height;
+function setStatus(m,type=''){const el=$('status');el.textContent=m;el.className=`status ${type}`;}
+function recordFfmpegLog(message){const line=String(message??'').trim();if(!line)return;const stamp=new Date().toLocaleTimeString();ffmpegLog.push(`[${stamp}] ${line}`);if(ffmpegLog.length>2000)ffmpegLog.splice(0,ffmpegLog.length-2000);if($('ffmpegLogModal')?.classList.contains('show'))renderFfmpegLog();}
+function renderFfmpegLog(){const output=$('ffmpegLogOutput');if(!output)return;output.textContent=ffmpegLog.length?ffmpegLog.join('\n'):'尚未产生 FFmpeg 日志。选择 MKV 导出后，这里会显示 FFmpeg 的输出内容。';output.scrollTop=output.scrollHeight;$('ffmpegLogCount').textContent=`${ffmpegLog.length} 条日志`;}
+function hexToRgba(hex,a){const n=parseInt(String(hex).replace('#',''),16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
+function fmtTime(sec){if(!Number.isFinite(sec)||sec<0)sec=0;return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(Math.floor(sec%60)).padStart(2,'0')}`;}
+function duration(){return Number.isFinite(audio.duration)?audio.duration:0;}
+function drawCover(source,sw,sh,blur){const scale=Math.max(W/sw,H/sh),dw=sw*scale,dh=sh*scale,x=(W-dw)/2,y=(H-dh)/2,pad=blur*3;ctx.save();ctx.filter=`brightness(${state.brightness}%) blur(${blur}px)`;ctx.drawImage(source,x-pad,y-pad,dw+pad*2,dh+pad*2);ctx.restore();}
+function fitFont(text,px,weight,maxWidth){let size=px;ctx.font=`${weight} ${size}px Arial,"Microsoft YaHei",sans-serif`;while(ctx.measureText(text).width>maxWidth&&size>16){size--;ctx.font=`${weight} ${size}px Arial,"Microsoft YaHei",sans-serif`;}return ctx.font;}
+function waveValues(count){const vals=new Array(count);if(analyser&&audioContext&&audioContext.state!=='closed'){if(!timeData||timeData.length!==analyser.fftSize)timeData=new Uint8Array(analyser.fftSize);analyser.getByteTimeDomainData(timeData);const stride=Math.max(1,Math.floor(timeData.length/count));for(let i=0;i<count;i++){const start=i*stride;let sum=0;for(let j=0;j<stride&&start+j<timeData.length;j++)sum+=Math.abs(timeData[start+j]-128)/128;vals[i]=Math.min(1,sum/stride*2.8);}}else for(let i=0;i<count;i++)vals[i]=.08+Math.abs(Math.sin(i*.21))*.08;
+ const alpha=.025+((state.waveSpeed-1)/9)*.30;if(!smoothedWave||smoothedWave.length!==count)smoothedWave=vals.slice();else for(let i=0;i<count;i++)smoothedWave[i]+=(vals[i]-smoothedWave[i])*alpha;return smoothedWave;}
+function draw(){
+ ctx.fillStyle='#111522';ctx.fillRect(0,0,W,H);
+ if(bgKind==='image'&&bgImage.complete&&bgImage.naturalWidth)drawCover(bgImage,bgImage.naturalWidth,bgImage.naturalHeight,state.blur);
+ else if(bgKind==='video'&&bgVideo.readyState>=2&&bgVideo.videoWidth)drawCover(bgVideo,bgVideo.videoWidth,bgVideo.videoHeight,state.blur);
+ else{const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#28244c');g.addColorStop(.55,'#141c32');g.addColorStop(1,'#0c3039');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);for(let i=0;i<9;i++){ctx.beginPath();ctx.arc((i*173+70)%W,(i*97+30)%H,70+i*8,0,Math.PI*2);ctx.fillStyle=`rgba(170,151,255,${.025+i*.002})`;ctx.fill();}}
+ const veil=ctx.createLinearGradient(0,0,0,H);veil.addColorStop(0,'rgba(5,7,14,.10)');veil.addColorStop(.48,'rgba(5,7,14,.22)');veil.addColorStop(1,'rgba(5,7,14,.62)');ctx.fillStyle=veil;ctx.fillRect(0,0,W,H);
+ const title=(state.songTitle||'').trim(),artist=(state.artistName||'').trim();ctx.textAlign='center';ctx.textBaseline='middle';
+ if(title){ctx.font=fitFont(title,state.titleSize,'700',W*.82);ctx.fillStyle=state.titleColor;ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=18;ctx.shadowOffsetY=3;ctx.fillText(title,W/2,H*.455,W*.86);}
+ if(artist){ctx.shadowBlur=12;ctx.shadowOffsetY=2;ctx.font=`500 ${state.artistSize}px Arial,"Microsoft YaHei",sans-serif`;ctx.fillStyle=state.artistColor;ctx.fillText(artist,W/2,H*.545,W*.84);}
+ ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;
+ const left=W*.085,right=W*.915,cy=H*.835,width=right-left,count=100,vals=waveValues(count),gap=3,bw=(width-(count-1)*gap)/count,p=duration()?Math.min(1,audio.currentTime/duration()):0;
+ for(let i=0;i<count;i++){const x=left+i*(bw+gap),h=8+vals[i]*48;ctx.fillStyle=i/count<=p?state.waveColor:hexToRgba(state.waveColor,.42);ctx.beginPath();ctx.roundRect(x,cy-h/2,bw,h,Math.min(3,bw/2));ctx.fill();}
+ ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillRect(left,cy+43,width,3);ctx.fillStyle=state.progressColor;ctx.fillRect(left,cy+43,width*p,3);ctx.beginPath();ctx.arc(left+width*p,cy+44.5,6,0,Math.PI*2);ctx.fillStyle='#fff';ctx.shadowColor=state.progressColor;ctx.shadowBlur=12;ctx.fill();ctx.shadowBlur=0;
+ ctx.textAlign='left';ctx.textBaseline='middle';ctx.font='500 15px Arial,sans-serif';ctx.fillStyle='rgba(255,255,255,.70)';ctx.fillText(fmtTime(audio.currentTime),left,cy+76);ctx.textAlign='right';ctx.fillText(fmtTime(duration()),right,cy+76);
+ const watermark=(state.watermarkText||'').trim();if(watermark){ctx.save();ctx.textAlign='left';ctx.textBaseline='bottom';ctx.font=`500 ${state.watermarkSize}px Arial,\"Microsoft YaHei\",sans-serif`;ctx.fillStyle='rgba(190,195,205,.58)';ctx.shadowColor='transparent';ctx.fillText(watermark,32,H-12,W-64);ctx.restore();}
+}
+function tick(){draw();rafId=requestAnimationFrame(tick);}function startRender(){if(!rafId)tick();}
+function syncInputs(){for(const [id,key] of [['brightness','brightness'],['blur','blur'],['songTitle','songTitle'],['artistName','artistName'],['titleSize','titleSize'],['titleColor','titleColor'],['artistSize','artistSize'],['artistColor','artistColor'],['waveSpeed','waveSpeed'],['watermarkText','watermarkText'],['watermarkSize','watermarkSize'],['waveColor','waveColor'],['progressColor','progressColor']])$(id).value=state[key];$('brightnessVal').textContent=`${state.brightness}%`;$('blurVal').textContent=`${state.blur} px`;$('titleSizeVal').textContent=`${state.titleSize} px`;$('artistSizeVal').textContent=`${state.artistSize} px`;$('waveSpeedVal').textContent=`${state.waveSpeed} / 10 · ${state.waveSpeed<=3?'慢':state.waveSpeed<=7?'中':'快'}`;$('watermarkSizeVal').textContent=`${state.watermarkSize} px`;startRender();}
+function setupAudioGraph(){if(audioContext)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)throw new Error('此浏览器不支持 Web Audio API。');audioContext=new AC();analyser=audioContext.createAnalyser();analyser.fftSize=2048;analyser.smoothingTimeConstant=.78;audioSource=audioContext.createMediaElementSource(audio);recordDestination=audioContext.createMediaStreamDestination();audioSource.connect(analyser);analyser.connect(audioContext.destination);analyser.connect(recordDestination);}
+async function play(){if(!audio.src){setStatus('请先选择一首音乐。','error');return;}try{setupAudioGraph();if(audioContext.state==='suspended')await audioContext.resume();await audio.play();if(bgKind==='video')await bgVideo.play().catch(()=>{});$('playBtn').textContent='Ⅱ';setStatus('正在播放。','ok');}catch(e){setStatus(`无法播放：${e.message}`,'error');}}
+function pause(){$('playBtn').textContent='▶';audio.pause();bgVideo.pause();}
+function updateTime(){const d=duration(),t=audio.currentTime||0;$('timeText').textContent=`${fmtTime(t)} / ${fmtTime(d)}`;$('seek').value=d?Math.round(t/d*1000):0;}
+$('playBtn').addEventListener('click',()=>audio.paused?play():pause());audio.addEventListener('play',()=>$('playBtn').textContent='Ⅱ');audio.addEventListener('pause',()=>$('playBtn').textContent='▶');audio.addEventListener('loadedmetadata',()=>{updateTime();setStatus('音乐已载入，可以播放或导出。','ok');});audio.addEventListener('timeupdate',updateTime);audio.addEventListener('ended',()=>{pause();setStatus('播放完成。','ok');});$('seek').addEventListener('input',()=>{if(duration())audio.currentTime=Number($('seek').value)/1000*duration();});
+$('backgroundFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(!file)return;if(bgUrl)URL.revokeObjectURL(bgUrl);bgUrl=URL.createObjectURL(file);if(file.type.startsWith('image/')){bgKind='image';bgImage.onload=startRender;bgImage.src=bgUrl;bgVideo.pause();bgVideo.removeAttribute('src');bgVideo.load();}else if(file.type.startsWith('video/')){bgKind='video';bgVideo.src=bgUrl;bgVideo.load();bgVideo.play().catch(()=>{});bgImage.removeAttribute('src');}else{setStatus('不支持的背景格式。','error');return;}$('backgroundName').textContent=file.name;setStatus('背景已载入。','ok');startRender();});
+$('clearBackground').addEventListener('click',()=>{if(bgUrl)URL.revokeObjectURL(bgUrl);bgUrl=null;bgKind='none';bgVideo.pause();bgVideo.removeAttribute('src');bgVideo.load();bgImage.removeAttribute('src');$('backgroundFile').value='';$('backgroundName').textContent='尚未选择背景，将使用渐变底色';startRender();});
+$('audioFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(!file)return;if(audioUrl)URL.revokeObjectURL(audioUrl);audioUrl=URL.createObjectURL(file);pause();audio.src=audioUrl;audio.load();$('audioName').textContent=file.name;setStatus('正在读取音乐信息…');});
+$('clearAudio').addEventListener('click',()=>{pause();audio.removeAttribute('src');audio.load();if(audioUrl)URL.revokeObjectURL(audioUrl);audioUrl=null;$('audioFile').value='';$('audioName').textContent='尚未选择音乐';updateTime();setStatus('音乐已清除。');});
+function bindRange(id,key,label,suffix){$(id).addEventListener('input',e=>{state[key]=Number(e.target.value);$(label).textContent=`${state[key]}${suffix}`;startRender();});}
+bindRange('brightness','brightness','brightnessVal','%');bindRange('blur','blur','blurVal',' px');bindRange('titleSize','titleSize','titleSizeVal',' px');bindRange('artistSize','artistSize','artistSizeVal',' px');bindRange('waveSpeed','waveSpeed','waveSpeedVal',' / 10');bindRange('watermarkSize','watermarkSize','watermarkSizeVal',' px');$('waveSpeed').addEventListener('input',()=>{$('waveSpeedVal').textContent=`${state.waveSpeed} / 10 · ${state.waveSpeed<=3?'慢':state.waveSpeed<=7?'中':'快'}`;});$('watermarkText').addEventListener('input',e=>{state.watermarkText=e.target.value;startRender();});
+$('songTitle').addEventListener('input',e=>{state.songTitle=e.target.value;startRender();});$('artistName').addEventListener('input',e=>{state.artistName=e.target.value;startRender();});$('waveColor').addEventListener('input',e=>{state.waveColor=e.target.value;startRender();});$('progressColor').addEventListener('input',e=>{state.progressColor=e.target.value;startRender();});$('titleColor').addEventListener('input',e=>{state.titleColor=e.target.value;startRender();});$('artistColor').addEventListener('input',e=>{state.artistColor=e.target.value;startRender();});
+function downloadBlob(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);}
+function getSettings(){return{app:'Maailmavalo™ Mideo Maker',version:4,settings:{...state,format:$('format').value,fps:Number($('fps').value)}};}
+$('exportSettingsBtn').addEventListener('click',()=>{downloadBlob(new Blob([JSON.stringify(getSettings(),null,2)],{type:'application/json'}),'Maailmavalo-Mideo-Maker-settings.json');setStatus('设置文件已导出。','ok');});
+$('importSettingsBtn').addEventListener('click',()=>$('settingsFile').click());
+$('settingsFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const data=JSON.parse(await file.text()),s=data.settings||data,ranges={brightness:[20,150],blur:[0,24],titleSize:[24,110],artistSize:[14,64],waveSpeed:[1,10],watermarkSize:[10,32]};for(const [key,[min,max]] of Object.entries(ranges))if(Number.isFinite(Number(s[key])))state[key]=Math.max(min,Math.min(max,Number(s[key])));for(const key of ['songTitle','artistName'])if(typeof s[key]==='string')state[key]=s[key].slice(0,80);if(typeof s.watermarkText==='string')state.watermarkText=s.watermarkText.slice(0,100);for(const key of ['titleColor','artistColor','waveColor','progressColor'])if(typeof s[key]==='string'&&/^#[0-9a-f]{6}$/i.test(s[key]))state[key]=s[key];if(['dark','light'].includes(s.theme))applyTheme(s.theme);if(['mp4','mkv','webm'].includes(s.format))$('format').value=s.format;if([24,30,60].includes(Number(s.fps)))$('fps').value=String(s.fps);syncInputs();setStatus('设置已导入。背景和音乐文件需要重新选择。','ok');}catch(err){setStatus(`设置文件读取失败：${err.message}`,'error');}e.target.value='';});
+function applyTheme(theme){state.theme=theme;document.documentElement.dataset.theme=theme;$('themeBtn').textContent=theme==='dark'?'☼ 浅色模式':'☾ 深色模式';}
+$('themeBtn').addEventListener('click',()=>applyTheme(state.theme==='dark'?'light':'dark'));
+function progress(p){$('exportProgress').style.display='block';$('exportProgressBar').style.width=`${Math.max(0,Math.min(100,p))}%`;}
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+async function waitForAudioReady(){
+ if(Number.isFinite(audio.duration)&&audio.duration>0)return;
+ await new Promise((resolve,reject)=>{
+  const ok=()=>{cleanup();resolve();}, bad=()=>{cleanup();reject(new Error('音乐文件无法读取或解码。'));};
+  const cleanup=()=>{audio.removeEventListener('loadedmetadata',ok);audio.removeEventListener('canplay',ok);audio.removeEventListener('error',bad);};
+  audio.addEventListener('loadedmetadata',ok,{once:true});audio.addEventListener('canplay',ok,{once:true});audio.addEventListener('error',bad,{once:true});
+ });
+ if(!Number.isFinite(audio.duration)||audio.duration<=0)throw new Error('音乐时长无效。');
+}
+async function seekAudioToStart(){
+ await waitForAudioReady();
+ audio.currentTime=0;
+ if(Math.abs(audio.currentTime)>0.05){
+  await new Promise((resolve,reject)=>{
+   const ok=()=>{cleanup();resolve();},bad=()=>{cleanup();reject(new Error('音乐无法定位到起始位置。'));};
+   const cleanup=()=>{audio.removeEventListener('seeked',ok);audio.removeEventListener('error',bad);};
+   audio.addEventListener('seeked',ok,{once:true});audio.addEventListener('error',bad,{once:true});
+  });
+ }
+ await wait(500);
+}
+function throwIfCancelled(){if(exportCancelled)throw new Error('导出已取消。');}
+function pickRecorderMime(format){
+ const candidates=format==='mp4'
+  ? ['video/mp4;codecs="avc1.42E01E,mp4a.40.2"','video/mp4;codecs="avc1.640028,mp4a.40.2"','video/mp4']
+  : ['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+ return candidates.find(t=>MediaRecorder.isTypeSupported(t))||'';
+}
+async function recordVideo(format){
+ await waitForAudioReady();
+ if(!window.MediaRecorder||!canvas.captureStream)throw new Error('当前浏览器不支持画布录制，请尝试最新版 Chrome 或 Edge。');
+ setupAudioGraph();
+ if(audioContext.state==='suspended')await audioContext.resume();
+ pause();await seekAudioToStart();
+ if(bgKind==='video'){try{bgVideo.currentTime=0;await bgVideo.play();}catch(e){}}
+ await wait(180);draw();throwIfCancelled();
+ const fps=Number($('fps').value)||30,videoStream=canvas.captureStream(fps);
+ activeVideoStream=videoStream;
+ const tracks=[...videoStream.getVideoTracks(),...recordDestination.stream.getAudioTracks()],stream=new MediaStream(tracks);
+ const mime=pickRecorderMime(format),chunks=[];
+ const options={videoBitsPerSecond:7000000};
+ if(mime)options.mimeType=mime;
+ const recorder=new MediaRecorder(stream,options);activeRecorder=recorder;
+ const finished=new Promise((resolve,reject)=>{
+  recorder.ondataavailable=e=>{if(e.data?.size)chunks.push(e.data);};
+  recorder.onerror=e=>reject(e.error||new Error('录制失败。'));
+  recorder.onstop=()=>resolve(new Blob(chunks,{type:recorder.mimeType||mime||'video/webm'}));
+ });
+ recorder.start(1000);
+ setStatus(`正在录制画面… 0%`);progress(3);
+ let lastShown=-1;
+ const updateRecordingProgress=()=>{if(!Number.isFinite(audio.duration)||audio.duration<=0)return;const ratio=Math.min(1,Math.max(0,audio.currentTime/audio.duration));const pct=Math.min(99,Math.floor(ratio*15));if(pct!==lastShown){lastShown=pct;setStatus(`正在录制画面… ${Math.round(ratio*100)}%`);progress(3+pct);}};
+ const onTime=()=>updateRecordingProgress();audio.addEventListener('timeupdate',onTime);
+ await play();
+ if(audio.paused){audio.removeEventListener('timeupdate',onTime);if(recorder.state!=='inactive')recorder.stop();throw new Error('音乐未能开始播放，无法录制。');}
+ await new Promise((resolve,reject)=>{
+  let done=false;
+  const finish=()=>{if(done)return;done=true;clearTimeout(timer);audio.removeEventListener('ended',finish);resolve();};
+  const timer=setTimeout(finish,Math.ceil(audio.duration*1000)+5000);
+  audio.addEventListener('ended',finish,{once:true});
+  const cancelCheck=setInterval(()=>{if(exportCancelled){clearInterval(cancelCheck);if(recorder.state!=='inactive')recorder.stop();reject(new Error('导出已取消。'));}},100);
+ });
+ audio.removeEventListener('timeupdate',onTime);
+ await wait(200);
+ throwIfCancelled();
+ if(recorder.state!=='inactive')recorder.stop();
+ const blob=await finished;
+ activeRecorder=null;videoStream.getTracks().forEach(t=>t.stop());activeVideoStream=null;pause();return blob;
+}
+async function recordWebm(){return recordVideo('webm');}
+function showFfmpegTimeoutModal(){return new Promise(resolve=>{const modal=$('ffmpegTimeoutModal'),retry=$('ffmpegRetryBtn'),waitBtn=$('ffmpegWaitBtn'),cancel=$('ffmpegCancelBtn');modal.classList.add('show');const cleanup=()=>{modal.classList.remove('show');retry.onclick=waitBtn.onclick=cancel.onclick=null;};retry.onclick=()=>{cleanup();resolve('retry');};waitBtn.onclick=()=>{cleanup();resolve('wait');};cancel.onclick=()=>{cleanup();resolve('cancel');};});}
+async function createFfmpegInstance(){
+ // Load the FFmpeg JavaScript module from the exact project-local path.
+ recordFfmpegLog('正在导入本地 FFmpeg JavaScript 模块。');
+ let FFmpeg;
+ try{({FFmpeg}=await import('./ffmpeg/ffmpeg-0.12.15/package/dist/esm/index.js'));}
+ catch(error){recordFfmpegLog(`导入 FFmpeg 模块失败：${error?.stack||error?.message||error}`);throw error;}
+ const ffmpeg=new FFmpeg();
+ ffmpeg.on('progress',({progress:p})=>{if(exportCancelled)return;setStatus(`正在转码… ${Math.round((p||0)*100)}%`);progress(20+Math.round((p||0)*75));});
+ ffmpeg.on('log',({message})=>recordFfmpegLog(message));
+ const localAsset=(path)=>new URL(path,document.baseURI).href;
+ const wasmParts=[
+  {path:'/ffmpeg/ffmpeg-core.wasm.part-001',bytes:16777216},
+  {path:'/ffmpeg/ffmpeg-core.wasm.part-002',bytes:15455203}
+ ];
+ let wasmObjectURL=null;
+ recordFfmpegLog('开始初始化 FFmpeg；WASM 已拆分为两个 Workers 可托管的小文件。');
+ try{
+  const wasmBuffers=await Promise.all(wasmParts.map(async(part,index)=>{
+   recordFfmpegLog(`正在下载 FFmpeg WASM 分片 ${index+1}/${wasmParts.length}：${part.path}`);
+   const response=await fetch(localAsset(part.path),{cache:'force-cache'});
+   if(!response.ok)throw new Error(`WASM 分片 ${index+1} 下载失败：HTTP ${response.status} ${response.statusText}`);
+   const buffer=await response.arrayBuffer();
+   if(buffer.byteLength!==part.bytes)throw new Error(`WASM 分片 ${index+1} 大小不正确：预期 ${part.bytes} 字节，实际 ${buffer.byteLength} 字节`);
+   recordFfmpegLog(`WASM 分片 ${index+1}/${wasmParts.length} 下载完成（${buffer.byteLength.toLocaleString()} 字节）。`);
+   return buffer;
+  }));
+  const wasmBlob=new Blob(wasmBuffers,{type:'application/wasm'});
+  if(wasmBlob.size!==32232419)throw new Error(`WASM 拼接后大小不正确：${wasmBlob.size} 字节`);
+  wasmObjectURL=URL.createObjectURL(wasmBlob);
+  recordFfmpegLog(`WASM 分片拼接完成：${wasmBlob.size.toLocaleString()} 字节；正在初始化核心。`);
+  await ffmpeg.load({
+   coreURL:localAsset('/ffmpeg/ffmpeg-core.js'),
+   wasmURL:wasmObjectURL,
+   classWorkerURL:localAsset('/ffmpeg/ffmpeg-0.12.15/package/dist/esm/worker.js')
+  });
+  recordFfmpegLog('FFmpeg 初始化完成。');
+ }catch(error){
+  recordFfmpegLog(`FFmpeg 初始化失败：${error?.stack||error?.message||error}`);
+  throw error;
+ }finally{
+  if(wasmObjectURL)URL.revokeObjectURL(wasmObjectURL);
+ }
+ return ffmpeg;
+}
+async function loadFFmpeg(){
+ if(ffmpegInstance)return ffmpegInstance;
+ if(ffmpegLoadPromise)return ffmpegLoadPromise;
+ ffmpegLoadPromise=(async()=>{
+  let loadTask=null;
+  let timeoutMs=120000;
+  while(!exportCancelled){
+   const generation=++ffmpegLoadGeneration;
+   setStatus(`正在加载 FFmpeg 转码组件…（最多 ${Math.round(timeoutMs/60000)} 分钟）`);progress(16);ffmpegLog=[];recordFfmpegLog('开始加载 FFmpeg 转码组件。');
+   if(!loadTask || timeoutMs===120000){
+    loadTask=createFfmpegInstance();
+    // If a timed-out attempt eventually finishes, never publish it as the active instance.
+    loadTask.then(ffmpeg=>{if(generation!==ffmpegLoadGeneration || !ffmpegInstance){if(generation!==ffmpegLoadGeneration){try{ffmpeg.terminate();}catch(e){}}}},()=>{});
+   }
+   let timer;
+   const timeout=new Promise((_,reject)=>{timer=setTimeout(()=>reject(Object.assign(new Error(`FFmpeg 加载超时（${Math.round(timeoutMs/60000)} 分钟）。`),{code:'FFMPEG_LOAD_TIMEOUT'})),timeoutMs);});
+   try{
+    const ffmpeg=await Promise.race([loadTask,timeout]);
+    clearTimeout(timer);
+    if(generation!==ffmpegLoadGeneration){try{ffmpeg.terminate();}catch(e){}throw new Error('FFmpeg 加载任务已过期。');}
+    ffmpegInstance=ffmpeg;
+    return ffmpeg;
+   }catch(err){
+    clearTimeout(timer);
+    if(err?.code!=='FFMPEG_LOAD_TIMEOUT')throw err;
+    const choice=await showFfmpegTimeoutModal();
+    if(choice==='cancel')throw new Error('导出已取消。');
+    if(choice==='wait'){
+      // Keep waiting on the same in-flight download/initialization instead of starting over.
+      timeoutMs=300000;
+      continue;
+    }
+    // Retry means a fresh local core import and a fresh FFmpeg instance.
+    if(choice==='retry'){
+      ffmpegLoadGeneration++;
+      loadTask=null;
+      timeoutMs=120000;
+      continue;
+    }
+   }
+  }
+  throw new Error('导出已取消。');
+ })().finally(()=>{ffmpegLoadPromise=null;});
+ try{return await ffmpegLoadPromise;}catch(err){ffmpegInstance=null;throw err;}
+}
+async function ffmpegExecChecked(ffmpeg,args){
+ throwIfCancelled();
+ recordFfmpegLog(`执行命令：ffmpeg ${args.join(' ')}`);
+ let code;
+ try{code=await ffmpeg.exec(args);}
+ catch(error){recordFfmpegLog(`FFmpeg 执行异常：${error?.stack||error?.message||error}`);throw error;}
+ throwIfCancelled();
+ if(code!==0){recordFfmpegLog(`FFmpeg 命令执行结束，退出代码：${code}`);const detail=ffmpegLog.slice(-8).join(' | ');throw new Error(`FFmpeg 执行失败（代码 ${code}）。${detail||'未返回详细错误日志。'}`);}recordFfmpegLog('FFmpeg 命令执行成功。');
+}
+async function repairWebm(blob){
+ const ffmpeg=await loadFFmpeg(),input='recording.webm',output='fixed.webm';
+ setStatus('正在修复 WebM 文件头、时间戳与索引…');progress(18);
+ await ffmpeg.writeFile(input,new Uint8Array(await blob.arrayBuffer()));
+ try{
+  await ffmpegExecChecked(ffmpeg,['-fflags','+genpts+igndts','-i',input,'-map','0','-c','copy','-avoid_negative_ts','make_zero',output]);
+ }catch(firstErr){
+  await ffmpegExecChecked(ffmpeg,['-i',input,'-map','0','-c','copy','-avoid_negative_ts','make_zero',output]);
+ }
+ const data=await ffmpeg.readFile(output);
+ try{await ffmpeg.deleteFile(input);await ffmpeg.deleteFile(output);}catch(e){}
+ return new Blob([data],{type:'video/webm'});
+}
+async function convertBlob(blob,format,sourceExt='webm'){
+ const ffmpeg=await loadFFmpeg(),input=`recording.${sourceExt}`,output=`Maailmavalo-Mideo-Maker-${Date.now()}.${format}`;
+ await ffmpeg.writeFile(input,new Uint8Array(await blob.arrayBuffer()));
+ // Never trust a browser-generated MP4 container as a final artifact.
+ // Chrome/Android MediaRecorder can emit duplicated/non-monotonic DTS even
+ // when the file opens locally. A real mux/remux pass fixes the timeline.
+ const common=['-fflags','+genpts+igndts','-i',input,'-map','0:v:0','-map','0:a:0?','-c:v','libx264','-preset','veryfast','-crf','21','-profile:v','high','-level:v','4.1','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-ar','48000'];
+ // +faststart is an MP4 muxer option. Do not pass it to the Matroska muxer.
+ const args=format==='mp4'
+  ?[...common,'-movflags','+faststart',output]
+  :[...common,'-f','matroska',output];
+ await ffmpegExecChecked(ffmpeg,args);
+ const data=await ffmpeg.readFile(output),result=new Blob([data],{type:format==='mp4'?'video/mp4':'video/x-matroska'});
+ try{await ffmpeg.deleteFile(input);await ffmpeg.deleteFile(output);}catch(e){}
+ return result;
+}
+async function normalizeNativeMp4(blob){
+ setStatus('正在检查原生 MP4 时间轴并修复封装…');progress(90);
+ return convertBlob(blob,'mp4','mp4');
+}
+function timestampedName(ext){const d=new Date(),p=n=>String(n).padStart(2,'0');return `Maailmavalo-Mideo-Maker-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}.${ext}`;}
+async function finishExportBlob(raw,format,captureFormat){
+ throwIfCancelled();
+ // Keep the browser-native WebM path as the reliable baseline. MediaRecorder
+ // already produces a playable WebM and, importantly, this path does not depend
+ // on a network-loaded FFmpeg WASM bundle. FFmpeg repair remains available for
+ // formats that actually need it.
+ if(format==='webm'){
+  return {blob:new Blob([raw],{type:'video/webm'}),ext:'webm'};
+ }
+ // If Android/Chrome can record MP4 natively, preserve that previously-working
+ // export path instead of forcing every MP4 through FFmpeg. This also means a
+ // temporary CDN/WASM failure cannot break MP4 export. Users can still use MKV,
+ // or a browser without native MP4 support, through the FFmpeg path below.
+ if(format==='mp4' && captureFormat==='mp4'){
+  return {blob:new Blob([raw],{type:'video/mp4'}),ext:'mp4'};
+ }
+ setStatus(`录制完成，正在生成 ${format.toUpperCase()}…`);progress(18);
+ const fixed=await convertBlob(raw,format,captureFormat);
+ return {blob:fixed,ext:format};
+}
+$('cancelExportBtn').addEventListener('click',()=>{
+ exportCancelled=true;
+ ffmpegLoadGeneration++;
+ if(activeRecorder&&activeRecorder.state!=='inactive')activeRecorder.stop();
+ if(activeVideoStream)activeVideoStream.getTracks().forEach(t=>t.stop());
+ if(ffmpegInstance){try{ffmpegInstance.terminate();}catch(e){}ffmpegInstance=null;}
+ setStatus('正在取消导出…');
+});
+$('exportVideoBtn').addEventListener('click',async()=>{
+ const btn=$('exportVideoBtn'),cancel=$('cancelExportBtn'),format=$('format').value;
+ btn.disabled=true;cancel.style.display='flex';btn.textContent='正在导出…';exportCancelled=false;progress(1);
+ try{
+  setStatus('正在准备导出…');
+  const captureFormat=(format==='mp4'&&pickRecorderMime('mp4'))?'mp4':'webm';
+  if(format==='mp4'&&captureFormat==='mp4')setStatus('浏览器支持原生 MP4，将直接导出，不加载 FFmpeg。');
+  if(format==='webm')setStatus('WebM 将直接导出，不加载 FFmpeg。');
+  if(format==='mkv')setStatus('MKV 需要 FFmpeg，正在准备加载转码组件…');
+  const raw=await recordVideo(captureFormat);
+  throwIfCancelled();
+  const result=await finishExportBlob(raw,format,captureFormat);
+  downloadBlob(result.blob,timestampedName(result.ext));
+  progress(100);setStatus(`导出完成：${timestampedName(result.ext)}`,'ok');
+ }catch(err){
+  if(err?.message==='导出已取消。'){setStatus('导出已取消。','error');}
+  else{
+   console.error(err);
+   const detail=ffmpegLog.slice(-8).join(' | ');
+   const message=err?.message||String(err)||'未知错误';
+   setStatus(`导出失败：${message}${detail&&!message.includes(detail)?`。FFmpeg 日志：${detail}`:''}`,'error');
+  }
+ }finally{
+  activeRecorder=null;activeVideoStream=null;btn.disabled=false;cancel.style.display='none';btn.textContent='⬇ 开始导出视频';
+  setTimeout(()=>{$('exportProgress').style.display='none';progress(0);},5000);
+ }
+});
+$('viewFfmpegLogBtn').addEventListener('click',()=>{$('ffmpegLogModal').classList.add('show');renderFfmpegLog();});
+$('closeFfmpegLogBtn').addEventListener('click',()=>$('ffmpegLogModal').classList.remove('show'));
+$('ffmpegLogModal').addEventListener('click',event=>{if(event.target===$('ffmpegLogModal'))$('ffmpegLogModal').classList.remove('show');});
+$('clearFfmpegLogBtn').addEventListener('click',()=>{ffmpegLog=[];renderFfmpegLog();});
+$('copyFfmpegLogBtn').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(ffmpegLog.join('\n'));$('copyFfmpegLogBtn').textContent='已复制';setTimeout(()=>$('copyFfmpegLogBtn').textContent='复制日志',1500);}catch(error){$('copyFfmpegLogBtn').textContent='复制失败';}});
+$('fullscreenBtn').addEventListener('click',async()=>{const stage=$('stage').parentElement;try{if(!document.fullscreenElement){await stage.requestFullscreen();$('fullscreenBtn').textContent='⛶ 退出全屏';}else{await document.exitFullscreen();}}catch(e){setStatus('当前浏览器不允许全屏预览。','error');}});document.addEventListener('fullscreenchange',()=>{$('fullscreenBtn').textContent=document.fullscreenElement?'⛶ 退出全屏':'⛶ 全屏预览';});
+syncInputs();applyTheme(state.theme);startRender();updateTime();window.addEventListener('beforeunload',()=>{if(bgUrl)URL.revokeObjectURL(bgUrl);if(audioUrl)URL.revokeObjectURL(audioUrl);});
+</script></body></html>
