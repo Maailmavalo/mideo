@@ -1,19 +1,26 @@
 {
-  "name": "@ffmpeg/util",
-  "version": "0.12.2",
-  "description": "browser utils for @ffmpeg/*",
-  "main": "./dist/cjs/index.js",
-  "type": "module",
-  "types": "./dist/cjs/index.d.ts",
+  "name": "@ffmpeg/ffmpeg",
+  "version": "0.12.15",
+  "description": "FFmpeg WebAssembly version for browser",
+  "main": "./dist/umd/ffmpeg.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/cjs/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "types": "./dist/esm/index.d.ts",
+      "node": "./dist/esm/empty.mjs",
+      "default": {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/umd/ffmpeg.js"
+      }
+    },
+    "./worker": {
+      "types": "./dist/esm/worker.d.ts",
+      "default": "./dist/esm/worker.js"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "types/ffmpeg.d.ts"
   ],
   "repository": {
     "type": "git",
@@ -21,6 +28,7 @@
   },
   "keywords": [
     "ffmpeg",
+    "WebAssembly",
     "video",
     "audio",
     "transcode"
@@ -45,12 +53,15 @@
     "typescript": "^5.1.6",
     "webpack-cli": "^5.1.4"
   },
+  "dependencies": {
+    "@ffmpeg/types": "^0.12.4"
+  },
   "scripts": {
-    "dev": "tsc -p tsconfig-esm.json --watch",
+    "dev": "webpack -w --mode development",
     "lint": "eslint src",
     "clean": "rimraf dist",
     "build:esm": "tsc -p tsconfig.esm.json",
-    "build:umd": "tsc -p tsconfig.cjs.json && webpack",
+    "build:umd": "webpack",
     "build": "npm run clean && npm run build:esm && npm run build:umd"
   }
 }
